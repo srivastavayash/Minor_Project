@@ -179,7 +179,6 @@ def predict(request, ticker_value, number_of_days):
 
     # ========================================== Machine Learning ==========================================
 
-
     try:
         df_ml = yf.download(tickers = ticker_value, period='3mo', interval='1h')
     except:
@@ -191,7 +190,7 @@ def predict(request, ticker_value, number_of_days):
     forecast_out = int(number_of_days)
     df_ml['Prediction'] = df_ml[['Adj Close']].shift(-forecast_out)
     # Splitting data for Test and Train
-    X = np.array(df_ml.drop(['Prediction'],1))
+    X = np.array(df_ml.drop(['Prediction'],axis=1))
     X = preprocessing.scale(X)
     X_forecast = X[-forecast_out:]
     X = X[:-forecast_out]
